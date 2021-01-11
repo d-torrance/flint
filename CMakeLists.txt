@@ -52,10 +52,10 @@ option(BUILD_SHARED_LIBS "Build shared libs" on)
 option(WITH_NTL "Build with NTL or not" off)
 
 # Find dependencies
-find_package(GMP REQUIRED)
-find_package(MPFR REQUIRED)
-if (WITH_NTL)
-    find_package(NTL REQUIRED)
+find_package(GMP 6.0.0 REQUIRED)
+find_package(MPFR 4.0.1 REQUIRED)
+if(WITH_NTL)
+    find_package(NTL 10.5.0 REQUIRED)
 endif()
 find_package(Python REQUIRED)
 
@@ -270,7 +270,7 @@ list(APPEND HEADERS ${TEMP})
 
 add_library(flint ${SOURCES})
 target_link_libraries(flint PUBLIC
-    ${NTL_LIBRARY} ${MPFR_LIBRARIES} ${GMP_LIBRARIES} ${PThreads_LIBRARIES}
+    ${NTL_LIBRARIES} ${MPFR_LIBRARIES} ${GMP_LIBRARIES} ${PThreads_LIBRARIES}
 )
 
 if(FLINT_USES_BLAS)
@@ -395,7 +395,7 @@ if(BUILD_TESTING)
     endforeach ()
 
     if(WITH_NTL)
-      target_link_libraries(src-interfaces-test-t-NTL-interface ${NTL_LIBRARY})
+      target_link_libraries(src-interfaces-test-t-NTL-interface ${NTL_LIBRARIES})
       target_include_directories(src-interfaces-test-t-NTL-interface PUBLIC ${NTL_INCLUDE_DIR})
     endif()
 endif()
