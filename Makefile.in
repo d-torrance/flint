@@ -101,10 +101,10 @@ EXE_LDFLAGS:=$(LDFLAGS) $(foreach path, $(ABS_FLINT_DIR) $(GMP_LIB_PATH) $(MPFR_
 ################################################################################
 
 CFG_FILES :=                                                                \
-        $(FLINT_DIR)/config.h           $(SRC_DIR)/flint-config.h           \
+        $(FLINT_DIR)/config.h           $(FLINT_DIR)/src/flint-config.h     \
         $(FLINT_DIR)/config.log                                             \
-        $(SRC_DIR)/fft_tuning.h         $(FLINT_DIR)/flint.pc               \
-        $(FLINT_DIR)/Makefile           $(SRC_DIR)/fmpz/fmpz.c
+        $(FLINT_DIR)/src/fft_tuning.h   $(FLINT_DIR)/flint.pc               \
+        $(FLINT_DIR)/Makefile           $(FLINT_DIR)/src/fmpz/fmpz.c
 
 ################################################################################
 # directories
