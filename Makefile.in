@@ -247,6 +247,8 @@ $(foreach dir, $(DIRS), $(eval $(call xxx_SOURCES,$(dir))))
 # We clear some template files
 fmpz_lll_SOURCES := $(filter-out $(SRC_DIR)/fmpz_lll/babai.c $(SRC_DIR)/fmpz_lll/mpf2_lll.c $(SRC_DIR)/fmpz_lll/d_lll.c,$(fmpz_lll_SOURCES))
 
+fmpz_SOURCES := $(fmpz_SOURCES) $(FLINT_DIR)/src/fmpz/fmpz.c
+
 SOURCES := $(foreach dir,$(DIRS),$($(dir)_SOURCES))
 
 define xxx_PROF_SOURCES
@@ -301,6 +303,8 @@ $(1)_LOBJS := $(patsubst $(SRC_DIR)/%.c,$(BUILD_DIR)/%.lo,$($(1)_SOURCES))
 endef
 $(foreach dir, $(DIRS), $(eval $(call xxx_LOBJS,$(dir))))
 endif
+
+fmpz_LOBJS := $(patsubst $(FLINT_DIR)/src/%.c,$(BUILD_DIR)/%.lo,$(fmpz_LOBJS))
 
 ################################################################################
 # executables
@@ -531,6 +535,10 @@ endef
 
 $(foreach dir, $(DIRS), $(eval $(call xxx_LOBJS_rule,$(dir))))
 endif
+
+$(BUILD_DIR)/fmpz/fmpz.lo: $(FLINT_DIR)/src/fmpz/fmpz.c | $(BUILD_DIR)/fmpz
+	@echo "  CC  fmpz/fmpz.lo"
+	@$(CC) $(PIC_FLAG) $(CFLAGS) $(CPPFLAGS) $(LIB_CPPFLAGS) -c $< -o $@ -MMD -MF $@.d
 
 ################################################################################
 # executables
