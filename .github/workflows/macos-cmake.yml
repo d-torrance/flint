@@ -1,0 +1,14 @@
+name: macOS cmake
+on: push
+
+jobs:
+  macos-cmake:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build with CMake
+        run: |
+          mkdir build
+          cd build
+          cmake -S.. -B. -GNinja
+          ninja
