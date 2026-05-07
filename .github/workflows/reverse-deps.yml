@@ -1,7 +1,6 @@
 name: Reverse Dependencies
 
 on: push
-  workflow_dispatch:
 
 jobs:
   build-reverse-deps:
