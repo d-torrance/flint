@@ -1,0 +1,44 @@
+name: Reverse Dependencies
+
+on: push
+  workflow_dispatch:
+
+jobs:
+  build-reverse-deps:
+    name: ${{ matrix.package }}
+    runs-on: ubuntu-latest
+    container:
+      image: debian:experimental
+
+    strategy:
+      fail-fast: false
+      matrix:
+        package:
+          - e-antic
+          - form
+          - gyoto
+          - msolve
+          - normaliz
+          - singular
+          - macaulay2
+          - polymake
+
+    steps:
+      - name: Configure apt
+        run: |
+          apt-get update
+
+      - name: Install dependencies
+        run: |
+          apt-get install -y -t experimental libflint-dev
+
+      - name: Download source package
+        run: |
+          apt-get source ${{ matrix.package }}
+
+      - name: Build package
+        run: |
+          dir=$(ls -d ${{ matrix.package }}-*/ | head -1)
+          cd "$dir"
+          apt-get build-dep -y .
+          dpkg-buildpackage -us -uc
