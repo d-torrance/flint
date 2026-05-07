@@ -31,6 +31,7 @@ jobs:
       - name: Install dependencies
         run: |
           apt-get install -y -t experimental libflint-dev
+          apt-get install -y dpkg-dev
 
       - name: Download source package
         run: |
